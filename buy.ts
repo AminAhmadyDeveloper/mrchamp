@@ -25,18 +25,18 @@ const buy = async (
   await page.goto("https://www.rozblog.com/", { timeout: 0 });
 
   // Query for an element handle.
-  const userName = await page.waitForSelector("#username");
+  const userName = await page.waitForSelector("#username", { timeout: 0 });
   await userName?.click();
   await userName?.type(process.env.USER_NAME);
 
-  const password = await page.waitForSelector("#password");
+  const password = await page.waitForSelector("#password", { timeout: 0 });
   await password?.click();
   await password?.type(process.env.PASSWORD);
 
-  const login = await page.waitForSelector(".button.btn-type-1.login");
+  const login = await page.waitForSelector(".button.btn-type-1.login", { timeout: 0 });
   await login?.click();
 
-  const listOfBlogs = await page.waitForSelector("#pnl > li:nth-child(5) > a");
+  const listOfBlogs = await page.waitForSelector("#pnl > li:nth-child(5) > a", { timeout: 0 });
   await page.keyboard.down("Control");
   await listOfBlogs?.click();
   await page.keyboard.up("Control");
@@ -46,11 +46,11 @@ const buy = async (
   const settingPageHandle = async () => {
     const settings = (await browser.pages()).at(2);
 
-    const selectBox = await settings?.waitForSelector("#editor");
+    const selectBox = await settings?.waitForSelector("#editor", { timeout: 0 });
     await selectBox.select("6");
 
     const selectButton = await settings?.waitForSelector(
-      "body > form > div > div:nth-child(1) > div.col_75 > input"
+      "body > form > div > div:nth-child(1) > div.col_75 > input", { timeout: 0 }
     );
     await selectButton.click();
 
@@ -60,7 +60,7 @@ const buy = async (
   const editPageHandle = async () => {
     const edit = (await browser.pages()).at(1);
 
-    const area = await edit?.waitForSelector("#mtex");
+    const area = await edit?.waitForSelector("#mtex", { timeout: 0 });
     console.log(area);
     await area?.click();
 
@@ -81,19 +81,19 @@ const buy = async (
     await edit.evaluate(load, recept);
 
     const buttonSubmit = await edit?.waitForSelector(
-      "#npform > div > div.tab-content > div:nth-child(6) > div > input.btn.primary"
+      "#npform > div > div.tab-content > div:nth-child(6) > div > input.btn.primary", { timeout: 0 }
     );
     await buttonSubmit?.click();
 
     setTimeout(async () => {
-      const linkToSettings = await edit.waitForSelector("#post_form > div > a");
+      const linkToSettings = await edit.waitForSelector("#post_form > div > a", { timeout: 0 });
       await linkToSettings.click();
 
-      const selectBox = await edit?.waitForSelector("#editor");
+      const selectBox = await edit?.waitForSelector("#editor", { timeout: 0 });
       await selectBox.select("7");
 
       const selectButton = await edit?.waitForSelector(
-        "body > form > div > div:nth-child(1) > div.col_75 > input"
+        "body > form > div > div:nth-child(1) > div.col_75 > input", { timeout: 0 }
       );
       await selectButton.click();
 
@@ -110,13 +110,13 @@ const buy = async (
   const postsPageHandle = async () => {
     const posts = (await browser.pages()).at(1);
     const input = await posts?.waitForSelector(
-      "body > div.comments > form > input.rb_input.input_200"
+      "body > div.comments > form > input.rb_input.input_200", { timeout: 0 }
     );
     await input?.click();
     await input?.type(postNumber);
 
     const select = await posts?.waitForSelector(
-      "body > div.comments > form > select"
+      "body > div.comments > form > select", { timeout: 0 }
     );
     await select?.click();
     await posts?.keyboard.down("ArrowDown");
@@ -124,16 +124,16 @@ const buy = async (
     await posts?.keyboard.down("Enter");
 
     const search = await posts?.waitForSelector(
-      "body > div.comments > form > input.btn.primary"
+      "body > div.comments > form > input.btn.primary", { timeout: 0 }
     );
     await search?.click();
 
     const action = await posts?.waitForSelector(
-      "#tr_2 > td:nth-child(4) > div > a"
+      "#tr_2 > td:nth-child(4) > div > a", { timeout: 0 }
     );
     await action?.click();
     const edit = await posts?.waitForSelector(
-      "#tr_2 > td:nth-child(4) > div > ul > li:nth-child(1) > a"
+      "#tr_2 > td:nth-child(4) > div > ul > li:nth-child(1) > a", { timeout: 0 }
     );
     await posts?.keyboard.down("Control");
     await edit?.click();
@@ -150,7 +150,7 @@ const buy = async (
 
     setTimeout(async () => {
       const settings = await champ?.waitForSelector(
-        "#tbi > center > table > tbody > tr > td:nth-child(1) > a"
+        "#tbi > center > table > tbody > tr > td:nth-child(1) > a", { timeout: 0 }
       );
       await champ?.keyboard.down("Control");
       await settings?.click();
@@ -158,12 +158,12 @@ const buy = async (
       setTimeout(settingPageHandle, 1500);
       setTimeout(async () => {
         const postsSection = await champ?.waitForSelector(
-          "body > div:nth-child(3) > div > div.content > div.menu > div:nth-child(2)"
+          "body > div:nth-child(3) > div > div.content > div.menu > div:nth-child(2)", { timeout: 0 }
         );
         await postsSection?.click();
 
         const allPosts = await postsSection?.waitForSelector(
-          "#pnl > li:nth-child(3) > a"
+          "#pnl > li:nth-child(3) > a", { timeout: 0 }
         );
 
         await champ?.keyboard.down("Control");
