@@ -24,17 +24,26 @@ const buy = async (
   // Go to your site
   await page.goto("https://www.rozblog.com/", { timeout: 0 });
 
+  console.log('page loaded');
+  
+
   // Query for an element handle.
   const userName = await page.waitForSelector("#username", { timeout: 0 });
   await userName?.click();
   await userName?.type(process.env.USER_NAME);
 
+  console.log('username loaded');
+
   const password = await page.waitForSelector("#password", { timeout: 0 });
   await password?.click();
   await password?.type(process.env.PASSWORD);
 
+  console.log('pass loaded');
+
   const login = await page.waitForSelector(".button.btn-type-1.login", { timeout: 0 });
   await login?.click();
+
+  console.log('login clicked');
 
   const listOfBlogs = await page.waitForSelector("#pnl > li:nth-child(5) > a", { timeout: 0 });
   await page.keyboard.down("Control");
@@ -42,6 +51,8 @@ const buy = async (
   await page.keyboard.up("Control");
 
   await page.close();
+
+  console.log('blogs loaded');
 
   const settingPageHandle = async () => {
     const settings = (await browser.pages()).at(2);
@@ -85,12 +96,16 @@ const buy = async (
     );
     await buttonSubmit?.click();
 
+    console.log('post submitied');
+
     setTimeout(async () => {
       const linkToSettings = await edit.waitForSelector("#post_form > div > a", { timeout: 0 });
       await linkToSettings.click();
 
       const selectBox = await edit?.waitForSelector("#editor", { timeout: 0 });
       await selectBox.select("7");
+
+      console.log('done 7 loaded');
 
       const selectButton = await edit?.waitForSelector(
         "body > form > div > div:nth-child(1) > div.col_75 > input", { timeout: 0 }
@@ -109,6 +124,7 @@ const buy = async (
 
   const postsPageHandle = async () => {
     const posts = (await browser.pages()).at(1);
+    console.log('posts loaded');
     const input = await posts?.waitForSelector(
       "body > div.comments > form > input.rb_input.input_200", { timeout: 0 }
     );
@@ -148,6 +164,8 @@ const buy = async (
     const champ = (await browser.pages()).at(1);
     await champ?.goto(`${champ?.url()}/?change_accont=765746`);
 
+    console.log('champ loaded');
+
     setTimeout(async () => {
       const settings = await champ?.waitForSelector(
         "#tbi > center > table > tbody > tr > td:nth-child(1) > a", { timeout: 0 }
@@ -155,7 +173,10 @@ const buy = async (
       await champ?.keyboard.down("Control");
       await settings?.click();
       await champ?.keyboard.up("Control");
-      setTimeout(settingPageHandle, 1500);
+      setTimeout(settingPageHandle, 50);
+      
+      console.log('settings loaded');
+
       setTimeout(async () => {
         const postsSection = await champ?.waitForSelector(
           "body > div:nth-child(3) > div > div.content > div.menu > div:nth-child(2)", { timeout: 0 }
@@ -171,6 +192,8 @@ const buy = async (
         await champ?.keyboard.up("Control");
 
         await champ?.close();
+
+        console.log('start posts loaded');
         setTimeout(postsPageHandle, 3500);
       }, 3500);
     }, 1500);
