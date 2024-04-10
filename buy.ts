@@ -13,11 +13,9 @@ const buy = async (
   type: "gems" | "coins"
 ) => {
   console.log("adding " + added + " " + type + " " + "to user " + postNumber);
-  const job = exec('hostnamectl')
-  if(job.stdout) {
-    console.log(job.stdout.readable);
-    
-  }
+  exec("hostnamectl", function (error, stdout, stderr) {
+    console.log(stdout);
+  });
   // Launch the browser
   const browser = await puppeteer.launch({
     headless: true,
