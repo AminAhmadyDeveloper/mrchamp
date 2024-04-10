@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext"],
+    "module": "CommonJS",
+    "target": "ESNext",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "noEmitHelpers": false,
+  },
+  "include": ["./**/*"]
+}
