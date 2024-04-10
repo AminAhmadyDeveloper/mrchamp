@@ -16,10 +16,9 @@ const buy = async (
     headless: true,
     product: "chrome",
   });
-  const context = browser.defaultBrowserContext();
 
   // Create a page
-  const page = await context.newPage();
+  const page = await browser.newPage();
 
   // Go to your site
   await page.goto("https://www.rozblog.com/");
@@ -44,7 +43,7 @@ const buy = async (
   await page.close();
 
   const settingPageHandle = async () => {
-    const settings = (await context.pages()).at(2);
+    const settings = (await browser.pages()).at(2);
 
     const selectBox = await settings?.waitForSelector("#editor");
     await selectBox.select("6");
@@ -58,7 +57,7 @@ const buy = async (
   };
 
   const editPageHandle = async () => {
-    const edit = (await context.pages()).at(1);
+    const edit = (await browser.pages()).at(1);
 
     const area = await edit?.waitForSelector("#mtex");
     await area?.click();
@@ -107,7 +106,7 @@ const buy = async (
   };
 
   const postsPageHandle = async () => {
-    const posts = (await context.pages()).at(1);
+    const posts = (await browser.pages()).at(1);
     const input = await posts?.waitForSelector(
       "body > div.comments > form > input.rb_input.input_200"
     );
@@ -144,7 +143,7 @@ const buy = async (
   };
 
   const champPageHandle = async () => {
-    const champ = (await context.pages()).at(1);
+    const champ = (await browser.pages()).at(1);
     await champ?.goto(`${champ?.url()}/?change_accont=765746`);
 
     setTimeout(async () => {
