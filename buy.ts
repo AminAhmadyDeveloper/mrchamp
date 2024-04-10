@@ -4,9 +4,6 @@ import "dotenv/config";
 import puppeteer from "puppeteer";
 import express from "express";
 import ncp from "copy-paste";
-import { URL } from "node:url";
-
-const url = new URL("https://www.rozblog.com/");
 
 const buy = async (
   postNumber: string,
@@ -25,7 +22,7 @@ const buy = async (
   const page = await context.newPage();
 
   // Go to your site
-  await page.goto(url.href);
+  await page.goto("https://www.rozblog.com/");
 
   // Query for an element handle.
   const userName = await page.waitForSelector("#username");
