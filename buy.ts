@@ -15,13 +15,14 @@ const buy = async (
   const browser = await puppeteer.launch({
     headless: true,
     product: "chrome",
+    timeout: 0,
   });
 
   // Create a page
   const page = await browser.newPage();
 
   // Go to your site
-  await page.goto("https://www.rozblog.com/");
+  await page.goto("https://www.rozblog.com/", { timeout: 0 });
 
   // Query for an element handle.
   const userName = await page.waitForSelector("#username");
@@ -60,6 +61,7 @@ const buy = async (
     const edit = (await browser.pages()).at(1);
 
     const area = await edit?.waitForSelector("#mtex");
+    console.log(area);
     await area?.click();
 
     await edit?.keyboard.down("Control");
@@ -179,6 +181,7 @@ const buy = async (
 
 async function success(value: string, added: string, type: "gems" | "coins") {
   let newBody = value;
+  console.log(182, value);
 
   if (value) {
     if (type === "coins") {
