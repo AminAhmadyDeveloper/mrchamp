@@ -16,7 +16,7 @@ const buy = async (
   console.log("adding " + added + " " + type + " " + "to user " + postNumber);
   // Launch the browser
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     product: "chrome",
   });
   const context = browser.defaultBrowserContext();
