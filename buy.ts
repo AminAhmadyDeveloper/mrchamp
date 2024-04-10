@@ -3,7 +3,6 @@ import "dotenv/config";
 // Import puppeteer
 import puppeteer from "puppeteer";
 import express from "express";
-import ncp from "copy-paste";
 
 import { exec } from "node:child_process";
 
@@ -83,19 +82,17 @@ const buy = async (
     const edit = (await browser.pages()).at(1);
 
     const area = await edit?.waitForSelector("#mtex", { timeout: 0 });
-    console.log(area);
     await area?.click();
 
-    await edit?.keyboard.down("Control");
-    await edit?.keyboard.press("A");
-    await edit?.keyboard.up("Control");
+    const getText = async () => {
+      const text = document.querySelector("#mtex");
+      return text.innerHTML;
+    };
+    const ready = await edit.evaluate(getText);
 
-    await edit?.keyboard.down("Control");
-    await edit?.keyboard.press("C");
-    await edit?.keyboard.up("Control");
-
-    const ready = ncp.paste();
+    console.log('before is: ', ready);
     const recept = await success(ready, added, type);
+    console.log('before is: ', recept);
     const load = async (recept: string) => {
       const text = document.querySelector("#mtex");
       text.innerHTML = recept;
@@ -176,6 +173,9 @@ const buy = async (
     await edit?.click();
     await posts?.keyboard.up("Control");
 
+    console.log('edit loaded');
+    
+
     await posts?.close();
 
     setTimeout(editPageHandle, 1500);
@@ -195,7 +195,7 @@ const buy = async (
       await champ?.keyboard.down("Control");
       await settings?.click();
       await champ?.keyboard.up("Control");
-      setTimeout(settingPageHandle, 50);
+      setTimeout(settingPageHandle, 500);
 
       console.log("settings loaded");
 
@@ -234,7 +234,7 @@ async function success(value: string, added: string, type: "gems" | "coins") {
     if (type === "coins") {
       const coins = value
         .split(
-          '<img src="https://rozup.ir/view/3461274/1855154.png" width="17" height="17" alt="">'
+          '&lt;img src="https://rozup.ir/view/3461274/1855154.png" width="17" height="17" alt=""&gt;'
         )[1]
         ?.split("سکه در بانک هستید")[0];
       newBody = value.replace(
@@ -247,7 +247,7 @@ async function success(value: string, added: string, type: "gems" | "coins") {
     if (type === "gems") {
       const gems = value
         .split(
-          '<img src="https://rozup.ir/view/3461273/4085915.png" width="17" height="17" alt="">'
+          '&lt;img src="https://rozup.ir/view/3461273/4085915.png" width="17" height="17" alt=""&gt;'
         )[1]
         ?.split("عدد یاقوت در جعبه خود دارید")[0];
       newBody = value.replace(
