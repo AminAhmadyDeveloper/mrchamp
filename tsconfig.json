@@ -6,6 +6,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     "noEmitHelpers": false,
+    "outDir": "dist"
   },
-  "include": ["./**/*"]
+  "include": ["./src/**/*"]
 }
